@@ -1,9 +1,9 @@
 import { Location } from 'history';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-import * as actions from '../../actions';
+// import * as actions from '../../actions';
 import { APIDescription, ApiDescriptionPropType, APIDocSource } from '../../apiDefs/schema';
 import { Flag } from '../../flags';
 import { history } from '../../store';
@@ -68,13 +68,13 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   /*
    * API Version
    */
-  const dispatch = useDispatch();
-  const queryParams = new URLSearchParams(location.search ?? undefined);
-  const apiVersion = queryParams.get('version');
+  // const dispatch = useDispatch();
+  // const queryParams = new URLSearchParams(location.search ?? undefined);
+  // const apiVersion = queryParams.get('version');
 
-  React.useEffect((): void => {
-    dispatch(actions.setRequstedApiVersion(apiVersion));
-  }, [dispatch, apiVersion, location.pathname]);
+  // React.useEffect((): void => {
+  //   dispatch(actions.setRequstedApiVersion(apiVersion));
+  // }, [dispatch, apiVersion, location.pathname]);
   
   /*
    * RENDER

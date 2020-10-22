@@ -41,7 +41,7 @@ const getMetadata = async (metadataUrl?: string): Promise<APIMetadata | null> =>
 };
 
 const setSearchParam = (queryString: string, version: string, history: any) => {
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(queryString);
   if (params.get('version') !== version) {
     params.set('version', version);
     history.push(`${history.location.pathname}?${params.toString()}`);
@@ -67,7 +67,6 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const renderSwaggerUI = React.useCallback(() => {
     const handleVersionChange = (currentVersion: string) => {
       dispatch(actions.setRequstedApiVersion(currentVersion));
-      setSearchParam(location.search, version, history);
     };
 
     if (document.getElementById('swagger-ui') && docUrl.length !== 0) {
@@ -81,7 +80,11 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
       ui.versionActions.setApiVersion(versionNumber);
       ui.versionActions.setApiMetadata(metadata as APIMetadata);
     }
-  }, [dispatch, docUrl, metadata, versionNumber, version, history, location.search]);
+  }, [dispatch, docUrl, metadata, versionNumber]);
+
+  React.useEffect(() => {
+    setSearchParam(location.search, version, history);
+  }, [location.search, version, history]);
 
   /*
    * Update the properties swagger uses for rendering
