@@ -1,11 +1,10 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
-import { HoverImage } from '../components';
-import CardLink from '../components/CardLink';
-import EmbeddedYoutubeVideo from '../components/EmbeddedYoutubeVideo';
+import videoPlayerIcon from '../assets/video-player.png';
+import videoPlayerHoverIcon from '../assets/video-player-hover.png';
+import { CardLink, EmbeddedYoutubeVideo, HoverImage, SideNav, SideNavEntry } from '../components';
 import PageHeader from '../components/PageHeader';
-import SideNav, { SideNavEntry } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
 import { defaultFlexContainer } from '../styles/vadsUtils';
 import toHtmlId from '../toHtmlId';
@@ -29,7 +28,11 @@ export interface NewsItem {
   source?: string;
 }
 
-const sections = NewsData.sections.map((section: DataSection) => ({
+const data = NewsData as {
+  sections: DataSection[];
+};
+
+const sections = data.sections.map((section: DataSection) => ({
   ...section,
   id: toHtmlId(section.title),
 }));
@@ -50,11 +53,11 @@ const MediaItem = ({ item }: { item: NewsItem }): JSX.Element => {
 
   return (
     <div className="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-y--5">
-      <div aria-hidden={true}>
+      <div aria-hidden>
         <a href={item.url} tabIndex={-1}>
           <HoverImage
-            imagePath={require('../assets/video-player.png')}
-            hoverImagePath={require('../assets/video-player-hover.png')}
+            imagePath={videoPlayerIcon}
+            hoverImagePath={videoPlayerHoverIcon}
           />
         </a>
       </div>
@@ -83,8 +86,8 @@ const News = (): JSX.Element => {
       <div className="vads-l-grid-container">
         <div className="vads-l-row">
           <SideNav ariaLabel="News Side Nav">
-            <SideNavEntry key="all" exact={true} to="/news" name="Overview" />
-            {sections.map((section: any) => (
+            <SideNavEntry key="all" exact to="/news" name="Overview" />
+            {sections.map((section: NewsSection) => (
               <SideNavEntry
                 key={section.id}
                 to={`#${section.id}`}

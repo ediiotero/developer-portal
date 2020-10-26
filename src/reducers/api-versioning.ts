@@ -1,33 +1,32 @@
 import { createSelector } from 'reselect';
-import { ISetInitialVersioning, ISetRequestedApiVersion } from '../actions';
-import { IVersionInfo } from '../containers/documentation/SwaggerDocs';
-import { APIMetadata, APIVersioning } from '../types';
+import { SetVersioning, SetRequestedAPIVersion } from '../actions';
+import { APIVersioning, VersionMetadata } from '../types';
 import * as constants from '../types/constants';
 
 const currentVersionStatus = 'Current Version';
 const getRequestedApiVersion = (state: APIVersioning) => state.requestedApiVersion;
-const getMetadata = (state: APIVersioning) => state.metadata;
+const getAPIVersions = (state: APIVersioning) => state.versions;
 const getInitialDocURL = (state: APIVersioning) => state.docUrl;
 
 const getVersionInfo = createSelector(
   getRequestedApiVersion,
-  getMetadata,
-  (requestedVersion: string, metadata: APIMetadata) => {
-    if (!metadata) {
+  getAPIVersions,
+  (requestedVersion: string, versionMetadata: VersionMetadata[]) => {
+    if (!versionMetadata) {
       return null;
     }
 
     if (
-      metadata &&
+      versionMetadata &&
       (!requestedVersion || requestedVersion === constants.CURRENT_VERSION_IDENTIFIER)
     ) {
-      const selectCurrentVersion = (versionInfo: IVersionInfo) =>
+      const selectCurrentVersion = (versionInfo: VersionMetadata) =>
         versionInfo.status === currentVersionStatus;
-      return metadata.meta.versions.find(selectCurrentVersion);
+      return versionMetadata.find(selectCurrentVersion);
     } else {
-      const selectSpecificVersion = (versionInfo: IVersionInfo) =>
+      const selectSpecificVersion = (versionInfo: VersionMetadata) =>
         versionInfo.version === requestedVersion;
-      return metadata.meta.versions.find(selectSpecificVersion);
+      return versionMetadata.find(selectSpecificVersion);
     }
   },
 );
@@ -35,17 +34,17 @@ const getVersionInfo = createSelector(
 export const getDocURL = createSelector(
   getVersionInfo,
   getInitialDocURL,
-  (versionInfo: IVersionInfo, initialDocUrl: string) => {
+  (versionInfo: VersionMetadata, initialDocUrl: string) => {
     if (!versionInfo) {
       return initialDocUrl;
     }
-    return `${process.env.REACT_APP_VETSGOV_SWAGGER_API}${versionInfo.path}`;
+    return `${constants.OPEN_API_SPEC_HOST}${versionInfo.path}`;
   },
 );
 
 export const getVersion = createSelector(
   getVersionInfo,
-  (versionInfo: IVersionInfo) => {
+  (versionInfo: VersionMetadata) => {
     if (!versionInfo) {
       return constants.CURRENT_VERSION_IDENTIFIER;
     }
@@ -57,7 +56,7 @@ export const getVersion = createSelector(
 
 export const getVersionNumber = createSelector(
   getVersionInfo,
-  (versionInfo: IVersionInfo) => {
+  (versionInfo: VersionMetadata) => {
     if (!versionInfo) {
       return '';
     }
@@ -68,16 +67,16 @@ export const getVersionNumber = createSelector(
 export const apiVersioning = (
   state = {
     docUrl: '',
-    metadata: null,
     requestedApiVersion: constants.CURRENT_VERSION_IDENTIFIER,
+    versions: null,
   },
-  action: ISetInitialVersioning | ISetRequestedApiVersion,
+  action: SetVersioning | SetRequestedAPIVersion,
 ): APIVersioning => {
   switch (action.type) {
     case constants.SET_REQUESTED_API_VERSION:
       return { ...state, requestedApiVersion: action.version };
-    case constants.SET_INITIAL_VERSIONING:
-      return { ...state, metadata: action.metadata, docUrl: action.docUrl };
+    case constants.SET_VERSIONING:
+      return { ...state, versions: action.versions, docUrl: action.docUrl };
     default:
       return state;
   }
