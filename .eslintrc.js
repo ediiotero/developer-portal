@@ -11,6 +11,42 @@ https://github.com/typescript-eslint/tslint-to-eslint-config/blob/master/docs/FA
 
 Happy linting! 💖
 */
+
+/**
+ * A lot of import rules are already covered by the Typescript compiler, so we don't use any
+ * of the eslint-plugin-import presets. These rules are helpful additions.
+ */
+const importRules = {
+  'import/first': 'error',
+  'import/newline-after-import': 'error',
+  'import/no-absolute-path': 'error',
+  'import/no-amd': 'error',
+  'import/no-anonymous-default-export': 'error',
+  'import/no-commonjs': 'error',
+  'import/no-cycle': 'error',
+  'import/no-duplicates': 'error', // prefer over ESLint's no-duplicate-imports rule?
+  'import/no-dynamic-require': 'error',
+  'import/no-extraneous-dependencies': 'error',
+  'import/no-mutable-exports': 'error',
+  'import/no-named-as-default': 'error',
+  'import/no-named-default': 'error',
+  'import/no-self-import': 'error',
+  'import/no-unassigned-import': [
+    'warn',
+    {
+      allow: [
+        '**/*.scss',
+        '**/*.css',
+        'jest', // can probably remove because an explicit import is not required in Jest context
+        '@testing-library/jest-dom/extend-expect',
+      ]
+    },
+  ],
+  'import/no-useless-path-segments': 'error',
+  'import/no-webpack-loader-syntax': 'error',
+  'import/order': 'error', // preferred over ESLint's sorted-imports rule
+};
+
 module.exports = {
   env: {
     browser: true,
@@ -36,6 +72,7 @@ module.exports = {
     'react-hooks',
   ],
   rules: {
+    ...importRules,
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/array-type': [
       'error',
@@ -152,7 +189,6 @@ module.exports = {
       'undefined',
     ],
     'id-match': 'error',
-    'import/order': 'error',
     'linebreak-style': 'off',
     'max-classes-per-file': ['error', 1],
     'max-len': 'off',
