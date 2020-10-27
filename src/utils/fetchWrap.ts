@@ -5,6 +5,7 @@ const sentryErrorHandler = (error: string, errorID: string) => {
     scope.setTag('Error ID', errorID);
     Sentry.captureException(error);
   });
+  throw error;
 };
 
 const fetchMiddleware = (response: Response, errorID: string) => {
@@ -14,12 +15,13 @@ const fetchMiddleware = (response: Response, errorID: string) => {
   return response;
 };
 
-export const fetchWrap = async (request: Request, errorID: string): Promise<unknown> => {
+export const fetchWrap = async (request: Request, errorID: string): Promise<Response> => {
   try {
     const response = await fetch(request);
     fetchMiddleware(response, errorID);
   } catch (error) {
     return sentryErrorHandler(error, errorID);
   }
-  return Response;
+  // what do we return?
+  return ?;
 };
