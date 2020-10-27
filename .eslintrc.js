@@ -12,14 +12,12 @@ https://github.com/typescript-eslint/tslint-to-eslint-config/blob/master/docs/FA
 Happy linting! 💖
 */
 
-/**
- * A lot of import rules are already covered by the Typescript compiler, so we don't use any
- * of the eslint-plugin-import presets. These rules are helpful additions.
- */
-
- const coreESLintRules = {
+const coreESLintRules = {
   'array-bracket-spacing': 'error',
   'array-element-newline': ['error', 'consistent'],
+  'arrow-body-style': 'error',
+  'arrow-parens': ['error', 'as-needed'],
+  'arrow-spacing': 'error',
   'block-spacing': 'error',
   'comma-dangle': ['error', 'always-multiline'],
   'comma-spacing': 'error',
@@ -57,6 +55,11 @@ Happy linting! 💖
   'max-params': 'error',
   'max-statements-per-line': 'error',
   'multiline-comment-style': 'warn',
+  'no-confusing-arrow': 'error',
+  'no-duplicate-imports': 'error',
+  'no-useless-computed-key': 'error',
+  'no-useless-constructor': 'error',
+  'no-useless-rename': 'error',
   'new-parens': 'error',
   'newline-per-chained-call': 'error',
   'no-array-constructor': 'error',
@@ -78,8 +81,12 @@ Happy linting! 💖
   'no-unneeded-ternary': 'error',
   'no-whitespace-before-property': 'error',
   'object-curly-spacing': ['error', 'always'],
+  'object-shorthand': 'error',
   'padded-blocks': ['error', 'never'],
+  'prefer-destructuring': ['error', { array: false, object: true }],
+  'prefer-template': 'error',
   'quotes': ['error', 'single', { avoidEscape: true }],
+  'rest-spread-spacing': 'error',
   'semi': 'error',
   'semi-spacing': 'error',
   'semi-style': 'error',
@@ -90,8 +97,13 @@ Happy linting! 💖
   'space-unary-ops': 'error',
   'spaced-comment': 'error',
   'switch-colon-spacing': 'error',
+  'template-curly-spacing': 'error',
 };
 
+/**
+ * A lot of import rules are already covered by the Typescript compiler, so we don't use any
+ * of the eslint-plugin-import presets. These rules are helpful additions.
+ */
 const importRules = {
   'import/first': 'error',
   'import/newline-after-import': 'error',
@@ -243,11 +255,8 @@ module.exports = {
     ],
     '@typescript-eslint/type-annotation-spacing': 'off',
     '@typescript-eslint/unified-signatures': 'error',
-    'arrow-body-style': 'error',
-    'arrow-parens': ['off', 'always'],
     'brace-style': ['off', 'off'],
     complexity: 'off',
-    'constructor-super': 'error',
     curly: 'error',
     eqeqeq: ['error', 'smart'],
     'guard-for-in': 'error',
@@ -266,11 +275,8 @@ module.exports = {
     'no-throw-literal': 'error',
     'no-unsafe-finally': 'error',
     'no-unused-labels': 'error',
-    'no-var': 'error',
-    'object-shorthand': 'error',
     'one-var': ['error', 'never'],
     'prefer-arrow/prefer-arrow-functions': 'error',
-    'prefer-const': 'off',
     radix: 'error',
     'react/jsx-boolean-value': 'error',
     'react/jsx-curly-spacing': 'off',
