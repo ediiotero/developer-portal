@@ -1,27 +1,25 @@
 import * as Sentry from '@sentry/browser';
 
-const sentryErrorHandler = (error: string, errorID: string) => {
+const sentryErrorLogger = (error: string, errorID: string): void => {
   Sentry.withScope(scope => {
     scope.setTag('Error ID', errorID);
     Sentry.captureException(error);
   });
-  throw error;
 };
 
-const fetchMiddleware = (response: Response, errorID: string) => {
+const fetchMiddleware = (response: Response, errorID: string): void => {
   if ((!response.ok && response.status !== 300) || 400 || 500) {
     throw TypeError(`Front End Error ID: ${errorID}`);
   }
-  return response;
 };
 
 export const fetchWrap = async (request: Request, errorID: string): Promise<Response> => {
   try {
     const response = await fetch(request);
     fetchMiddleware(response, errorID);
+    return response;
   } catch (error) {
-    return sentryErrorHandler(error, errorID);
+    sentryErrorLogger(error, errorID);
+    throw new Error(error);
   }
-  // what do we return?
-  return ?;
 };
