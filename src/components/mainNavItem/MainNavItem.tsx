@@ -21,8 +21,17 @@ interface MainNavItemProps {
   onClick: () => void;
 }
 
-export const MainNavItem = ( props: MainNavItemProps ): JSX.Element => {
-  const { activeClassName, className, onClick, targetUrl, excludeLargeScreen, excludeSmallScreen, largeScreenProps, children } = props;
+export const MainNavItem = (props: MainNavItemProps): JSX.Element => {
+  const {
+    activeClassName,
+    className,
+    onClick,
+    targetUrl,
+    excludeLargeScreen,
+    excludeSmallScreen,
+    largeScreenProps,
+    children,
+  } = props;
 
   const sharedProps = {
     activeClassName: classNames('va-api-active-nav', activeClassName),
