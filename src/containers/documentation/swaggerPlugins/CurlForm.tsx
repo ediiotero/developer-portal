@@ -58,8 +58,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     }
 
     if (this.props.operation.requestBody && this.requirementsMet()) {
-      const properties = this.props.operation.requestBody.content['application/json'].schema
-        .properties;
+      const { properties } = this.props.operation.requestBody.content['application/json'].schema;
       Object.keys(properties).map((propertyName: string) => {
         const property = properties[propertyName];
         property.name = propertyName;
@@ -129,7 +128,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     const options = {
       operationId: this.props.operation.operationId,
       parameters: {
-        ... this.state.paramValues,
+        ...this.state.paramValues,
         apiKey: this.state.apiKey,
         bearerToken: this.state.bearerToken,
         env: this.state.env,
@@ -287,7 +286,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
         { display: 'Sandbox', value: 'sandbox' },
         { display: 'Production', value: '' },
       ];
-      return options.map((optionValues) => (
+      return options.map(optionValues => (
         <option value={optionValues.value} key={optionValues.value}>
           {optionValues.display}
         </option>

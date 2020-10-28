@@ -12,15 +12,12 @@ https://github.com/typescript-eslint/tslint-to-eslint-config/blob/master/docs/FA
 Happy linting! 💖
 */
 
-/**
- * A lot of import rules are already covered by the Typescript compiler, so we don't use any
- * of the eslint-plugin-import presets. These rules are helpful additions.
- * https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
- */
-
- const coreESLintRules = {
+const coreESLintRules = {
+  'arrow-body-style': 'error',
   'array-bracket-spacing': 'error',
   'array-element-newline': ['error', 'consistent'],
+  'arrow-parens': ['error', 'as-needed'],
+  'arrow-spacing': 'error',
   'block-spacing': 'error',
   'comma-dangle': ['error', 'always-multiline'],
   'comma-spacing': 'error',
@@ -62,6 +59,8 @@ Happy linting! 💖
   'newline-per-chained-call': 'error',
   'no-array-constructor': 'error',
   'no-bitwise': 'error',
+  'no-confusing-arrow': 'error',
+  'no-duplicate-imports': 'error',
   'no-label-var': 'error',
   'no-lonely-if': 'error',
   'no-mixed-operators': 'error',
@@ -77,10 +76,17 @@ Happy linting! 💖
   'no-undef-init': 'error',
   'no-underscore-dangle': 'error',
   'no-unneeded-ternary': 'error',
+  'no-useless-computed-key': 'error',
+  'no-useless-constructor': 'error',
+  'no-useless-rename': 'error',
   'no-whitespace-before-property': 'error',
   'object-curly-spacing': ['error', 'always'],
+  'object-shorthand': 'error',
   'padded-blocks': ['error', 'never'],
+  'prefer-destructuring': ['error', { array: false, object: true }],
+  'prefer-template': 'error',
   'quotes': ['error', 'single', { avoidEscape: true }],
+  'rest-spread-spacing': 'error',
   'semi': 'error',
   'semi-spacing': 'error',
   'semi-style': 'error',
@@ -91,8 +97,14 @@ Happy linting! 💖
   'space-unary-ops': 'error',
   'spaced-comment': 'error',
   'switch-colon-spacing': 'error',
+  'template-curly-spacing': 'error',
 };
 
+/**
+ * A lot of import rules are already covered by the Typescript compiler, so we don't use any
+ * of the eslint-plugin-import presets. These rules are helpful additions.
+ * https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
+ */
 const importRules = {
   'import/first': 'error',
   'import/newline-after-import': 'error',
@@ -294,11 +306,8 @@ module.exports = {
     ],
     '@typescript-eslint/type-annotation-spacing': 'off',
     '@typescript-eslint/unified-signatures': 'error',
-    'arrow-body-style': 'error',
-    'arrow-parens': ['off', 'always'],
     'brace-style': ['off', 'off'],
     complexity: 'off',
-    'constructor-super': 'error',
     curly: 'error',
     eqeqeq: ['error', 'smart'],
     'guard-for-in': 'error',
@@ -317,12 +326,9 @@ module.exports = {
     'no-throw-literal': 'error',
     'no-unsafe-finally': 'error',
     'no-unused-labels': 'error',
-    'no-var': 'error',
-    'object-shorthand': 'error',
     'one-var': ['error', 'never'],
     // https://github.com/TristonJ/eslint-plugin-prefer-arrow
     'prefer-arrow/prefer-arrow-functions': 'error',
-    'prefer-const': 'off',
     radix: 'error',
     'use-isnan': 'error',
     'valid-typeof': 'off',
