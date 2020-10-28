@@ -115,7 +115,7 @@ export default class BetaPage extends React.Component<Record<string, unknown>, B
 
     return (
       <div className={classNames('beta-application', 'vads-u-margin-bottom--4')}>
-        <section role="region" aria-label="Page Hero" className="va-api-hero">
+        <section aria-label="Page Hero" className="va-api-hero">
           <div className="vads-l-grid-container">
             <div className="va-api-hero-callout">
               <h1>Sign up to test the next mobile VA applications</h1>
@@ -295,10 +295,14 @@ export default class BetaPage extends React.Component<Record<string, unknown>, B
               </div>
             </div>
             <div className={classNames('vads-l-row', 'vads-u-margin-top--2p5')}>
-              <div className={classNames('vads-l-col--12', 'small-screen:vads-l-col--6')}>
-                <label className={classNames('checkbox-label', 'vads-u-margin-y--0')}>
+              <fieldset className={classNames('vads-l-col--12', 'small-screen:vads-l-col--6')}>
+                <legend className={classNames(
+                  'checkbox-label',
+                  'vads-u-margin-y--0',
+                  'vads-u-font-size--base',
+                )}>
                   Select device(s)
-                </label>
+                </legend>
                 <div className="form-checkbox">
                   <input
                     id={`${idMappings[env].cell}-1`}
@@ -323,8 +327,8 @@ export default class BetaPage extends React.Component<Record<string, unknown>, B
                     Computer, tablet, or other smartphone
                   </label>
                 </div>
-              </div>
-              <div
+              </fieldset>
+              <fieldset
                 className={classNames(
                   'vads-l-col--12',
                   'vads-u-margin-top--2',
@@ -332,9 +336,13 @@ export default class BetaPage extends React.Component<Record<string, unknown>, B
                   'small-screen:vads-u-margin-top--0',
                 )}
               >
-                <label className={classNames('checkbox-label', 'vads-u-margin-y--0')}>
+                <legend className={classNames(
+                  'checkbox-label',
+                  'vads-u-margin-y--0',
+                  'vads-u-font-size--base',
+                )}>
                   Select log in method
-                </label>
+                </legend>
                 <div className="form-checkbox">
                   <input
                     id={`${idMappings[env].auth}-2`}
@@ -381,7 +389,7 @@ export default class BetaPage extends React.Component<Record<string, unknown>, B
                     MyHealtheVet
                   </label>
                 </div>
-              </div>
+              </fieldset>
             </div>
 
             <button
