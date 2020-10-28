@@ -5,8 +5,34 @@ import Im from 'immutable';
 import { CollapseProps, DeepLinkProps, MarkdownProps } from 'swagger-ui';
 import { sanitizeUrl } from '@braintree/sanitize-url';
 
+interface ExternalDocsProps {
+  url?: string;
+  description?: string;
+}
+
+const ExternalDocs: React.FunctionComponent<ExternalDocsProps> = (props: ExternalDocsProps) => (
+  <div>
+    {props.description ? (
+      <small>
+        {props.description}
+        {props.url ? ': ' : null}
+        {props.url ? (
+          <a
+            href={sanitizeUrl(props.url)}
+            onClick={e => e.stopPropagation()}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {props.url}
+          </a>
+        ) : null}
+      </small>
+    ) : null}
+  </div>
+);
+
 const createDeepLinkPath = (str: string | unknown) =>
-  typeof str === 'string' || str instanceof String ? str.trim().replace(/\s/g, '_') : '';
+  (typeof str === 'string' || str instanceof String ? str.trim().replace(/\s/g, '_') : '');
 
 interface OperationTagProps {
   tag: string;
@@ -32,14 +58,14 @@ export default class OperationTag extends React.Component<OperationTagProps> {
   };
 
   public static propTypes = {
-    tag: PropTypes.string.isRequired,
-    tagObj: ImPropTypes.map.isRequired,
+    getComponent: PropTypes.func.isRequired,
+    getConfigs: PropTypes.func.isRequired,
 
     layoutActions: PropTypes.object.isRequired,
     layoutSelectors: PropTypes.object.isRequired,
 
-    getComponent: PropTypes.func.isRequired,
-    getConfigs: PropTypes.func.isRequired,
+    tag: PropTypes.string.isRequired,
+    tagObj: ImPropTypes.map.isRequired,
   };
 
   public render(): JSX.Element {
@@ -81,37 +107,19 @@ export default class OperationTag extends React.Component<OperationTagProps> {
       <div className={showTag ? 'opblock-tag-section is-open' : 'opblock-tag-section'}>
         <h3
           onClick={() => layoutActions.show(isShownKey, !showTag)}
-          className={!tagDescription ? 'opblock-tag no-desc' : 'opblock-tag'}
+          className={tagDescription ? 'opblock-tag' : 'opblock-tag no-desc'}
           id={isShownKey.join('-')}
         >
           <DeepLink enabled={isDeepLinkingEnabled} isShown={showTag} path={tag} text={tag} />
-          {!tagDescription ? (
-            <small />
-          ) : (
+          {tagDescription ? (
             <small>
               <Markdown source={tagDescription} />
             </small>
+          ) : (
+            <small/>
           )}
 
-          <div>
-            {!tagExternalDocsDescription ? null : (
-              <small>
-                {tagExternalDocsDescription}
-                {tagExternalDocsUrl ? ': ' : null}
-                {tagExternalDocsUrl ? (
-                  <a
-                    href={sanitizeUrl(tagExternalDocsUrl)}
-                    onClick={e => e.stopPropagation()}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {tagExternalDocsUrl}
-                  </a>
-                ) : null}
-              </small>
-            )}
-          </div>
-
+          <ExternalDocs description={tagExternalDocsDescription} url={tagExternalDocsUrl} />
           <button
             className="expand-operation"
             title={showTag ? 'Collapse operation' : 'Expand operation'}

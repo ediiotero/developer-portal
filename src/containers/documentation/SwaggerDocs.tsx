@@ -1,7 +1,6 @@
 import * as Sentry from '@sentry/browser';
 import { Location } from 'history';
 import * as React from 'react';
-import { Dispatch } from 'react';
 import { connect } from 'react-redux';
 import SwaggerUI from 'swagger-ui';
 import * as actions from '../../actions';
@@ -34,7 +33,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<actions.SetRequestedAPIVersion | actions.SetVersioning>,
+  dispatch: React.Dispatch<actions.SetRequestedAPIVersion | actions.SetVersioning>,
 ) => ({
   setRequestedApiVersion: (version: string) => {
     dispatch(actions.setRequstedApiVersion(version));
@@ -43,6 +42,23 @@ const mapDispatchToProps = (
     dispatch(actions.setVersioning(url, metadata));
   },
 });
+
+const getMetadata = async (metadataUrl?: string): Promise<VersionMetadata[] | null> => {
+  if (!metadataUrl) {
+    return null;
+  }
+  try {
+    const request = new Request(`${metadataUrl}`, {
+      method: 'GET',
+    });
+    const response = await fetch(request);
+    const metadata = await (response.json() as Promise<APIMetadata>);
+    return metadata.meta.versions;
+  } catch (error) {
+    Sentry.captureException(error);
+    return null;
+  }
+};
 
 class SwaggerDocs extends React.Component<SwaggerDocsProps> {
   public async componentDidMount() {
@@ -78,7 +94,7 @@ class SwaggerDocs extends React.Component<SwaggerDocsProps> {
   }
 
   private setSearchParam() {
-    const version = this.props.version;
+    const { version } = this.props;
     const params = new URLSearchParams(this.props.location.search);
     if (params.get('version') !== version) {
       params.set('version', version);
@@ -88,25 +104,8 @@ class SwaggerDocs extends React.Component<SwaggerDocsProps> {
 
   private async setMetadataAndDocUrl() {
     const { openApiUrl, metadataUrl } = this.props.docSource;
-    const metadata = await this.getMetadata(metadataUrl);
+    const metadata = await getMetadata(metadataUrl);
     this.props.setVersioning(openApiUrl, metadata);
-  }
-
-  private async getMetadata(metadataUrl?: string): Promise<VersionMetadata[] | null> {
-    if (!metadataUrl) {
-      return null;
-    }
-    try {
-      const request = new Request(`${metadataUrl}`, {
-        method: 'GET',
-      });
-      const response = await fetch(request);
-      const metadata = await (response.json() as Promise<APIMetadata>);
-      return metadata.meta.versions;
-    } catch (error) {
-      Sentry.captureException(error);
-      return null;
-    }
   }
 
   private renderSwaggerUI() {

@@ -1,9 +1,10 @@
+/* eslint-disable max-lines -- component is long, need to refactor at some point */
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import * as React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { 
+import {
   OpenAPISpec,
   OpenAPISpecV2,
   OpenAPISpecV3,
@@ -11,7 +12,7 @@ import {
   Parameter,
   Schema,
   Server,
-  SwaggerSpecObject, 
+  SwaggerSpecObject,
 } from 'swagger-ui';
 import CodeWrapper from '../../../components/CodeWrapper';
 import { System } from './types';
@@ -51,15 +52,14 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     }
 
     if (state.params) {
-      state.params.map((parameter: Parameter) => {
+      state.params.forEach((parameter: Parameter) => {
         state.paramValues[parameter.name] = parameter.example || '';
       });
     }
 
     if (this.props.operation.requestBody && this.requirementsMet()) {
-      const properties = this.props.operation.requestBody.content['application/json'].schema
-        .properties;
-      Object.keys(properties).map((propertyName: string) => {
+      const { properties } = this.props.operation.requestBody.content['application/json'].schema;
+      Object.keys(properties).forEach((propertyName: string) => {
         const property = properties[propertyName];
         property.name = propertyName;
         requestBodyProperties.push(property);
@@ -98,10 +98,10 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   }
 
   public handleInputChange(parameterName: string, value: string): void {
-    this.setState({ 
+    this.setState({
       ...this.state,
       paramValues: {
-        ... this.state.paramValues,
+        ...this.state.paramValues,
         [parameterName]: value,
       },
     });
@@ -130,7 +130,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     const options = {
       operationId: this.props.operation.operationId,
       parameters: {
-        ... this.state.paramValues,
+        ...this.state.paramValues,
         apiKey: this.state.apiKey,
         bearerToken: this.state.bearerToken,
         env: this.state.env,
@@ -165,11 +165,13 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
         : this.state.bearerToken;
       options.securities = {
         authorized: {
-          // support multiple means of passing the bearer token. this is mostly due to swagger-client
-          // not being particularly sophisticated on this front.
-          // Bearer auth security (Claims): https://swagger.io/docs/specification/authentication/bearer-authentication/
-          // OAuth 2.0 security (Health): https://swagger.io/docs/specification/authentication/oauth2/
-          // https://github.com/swagger-api/swagger-js/blob/master/src/execute/oas3/build-request.js#L78
+          /**
+           * support multiple means of passing the bearer token. this is mostly due to swagger-client
+           * not being particularly sophisticated on this front.
+           * Bearer auth security (Claims): https://swagger.io/docs/specification/authentication/bearer-authentication/
+           * OAuth 2.0 security (Health): https://swagger.io/docs/specification/authentication/oauth2/
+           * https://github.com/swagger-api/swagger-js/blob/master/src/execute/oas3/build-request.js#L78
+           */
           OauthFlow: token ? {
             token: {
               access_token: token,
@@ -187,7 +189,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
 
   public buildRequestBody(): { [key: string]: string | string[] | Record<string, unknown> } {
     const requestBody = {};
-    this.state.requestBodyProperties.map((property: Schema) => {
+    this.state.requestBodyProperties.forEach((property: Schema) => {
       if (property.type === 'array' && this.state.paramValues[property.name]) {
         requestBody[property.name] = this.state.paramValues[property.name].split(',');
       } else if (property.type === 'object') {
@@ -283,8 +285,8 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   public environmentOptions(): JSX.Element[] {
     if (this.isSwagger2()) {
       const options = [
-        { value: 'sandbox', display: 'Sandbox' },
-        { value: '', display: 'Production' },
+        { display: 'Sandbox', value: 'sandbox' },
+        { display: 'Production', value: '' },
       ];
       return options.map((optionValues, i) => (
         <option value={optionValues.value} key={i}>
