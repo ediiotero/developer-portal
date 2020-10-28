@@ -57,7 +57,7 @@ Happy linting! 💖
   'max-nested-callbacks': ['error', 3], // default max is 10 callbacks
   'max-params': 'error',
   'max-statements-per-line': 'error',
-  'multiline-comment-style': 'warn',
+  'multiline-comment-style': 'error',
   'new-parens': 'error',
   'newline-per-chained-call': 'error',
   'no-array-constructor': 'error',
@@ -109,7 +109,7 @@ const importRules = {
   'import/no-named-default': 'error',
   'import/no-self-import': 'error',
   'import/no-unassigned-import': [
-    'warn',
+    'error',
     {
       allow: [
         '**/*.scss',
@@ -145,7 +145,7 @@ const reactRules = {
   'react/jsx-first-prop-new-line': ['error', 'multiline'],
   'react/jsx-indent': ['error', 2],
   'react/jsx-indent-props': ['error', 2],
-  'react/jsx-max-depth': ['warn', { max: 8 }],
+  'react/jsx-max-depth': ['error', { max: 8 }],
   'react/jsx-max-props-per-line': ['error', { when: 'multiline' }],
   // inline arrow functions are not very expensive, and React.useCallback can be
   // if it's overused https://kentcdodds.com/blog/usememo-and-usecallback
@@ -161,14 +161,14 @@ const reactRules = {
   'react/no-danger': 'error',
   'react/no-this-in-sfc': 'error',
   'react/no-unsafe': 'error',
-  'react/no-unused-prop-types': 'warn',
-  'react/no-unused-state': 'warn',
+  'react/no-unused-prop-types': 'error',
+  'react/no-unused-state': 'error',
   'react/prefer-es6-class': 'error', // class extends React.Component vs createReactClass
   'react/prefer-stateless-function': 'error',
   'react/self-closing-comp': 'error',
-  'react/sort-prop-types': 'warn',
+  'react/sort-prop-types': 'error',
   'react/state-in-constructor': 'error',
-  'react/static-property-placement': 'warn',
+  'react/static-property-placement': 'error',
   'react/style-prop-object': 'error',
   'react/void-dom-elements-no-children': 'error',
 };
