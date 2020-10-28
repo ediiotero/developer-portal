@@ -24,7 +24,7 @@ const coreESLintRules = {
   complexity: ['error', 12],
   'computed-property-spacing': 'error',
   'consistent-return': 'error',
-  'curly': 'error',
+  curly: 'error',
   'default-case': 'error',
   'default-case-last': 'error',
   'dot-location': ['error', 'property'],
@@ -62,7 +62,7 @@ const coreESLintRules = {
   'max-depth': 'error',
   'max-lines': 'error', // default file length 300
   'max-nested-callbacks': ['error', 3], // default max is 10 callbacks
-  'max-params': 'error',
+  'max-params': ['error', 4],
   'max-statements-per-line': 'error',
   'multiline-comment-style': 'error',
   'no-confusing-arrow': 'error',
@@ -136,9 +136,9 @@ const coreESLintRules = {
   'padded-blocks': ['error', 'never'],
   'prefer-destructuring': ['error', { array: false, object: true }],
   'prefer-template': 'error',
-  'quotes': ['error', 'single', { avoidEscape: true }],
+  quotes: ['error', 'single', { avoidEscape: true }],
   'rest-spread-spacing': 'error',
-  'semi': 'error',
+  semi: 'error',
   'semi-spacing': 'error',
   'semi-style': 'error',
   'sort-keys': 'error',
@@ -178,7 +178,7 @@ const importRules = {
         '**/*.css',
         'jest', // can probably remove because an explicit import is not required in Jest context
         '@testing-library/jest-dom/extend-expect',
-      ]
+      ],
     },
   ],
   'import/no-useless-path-segments': 'error',
@@ -294,6 +294,7 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'error',
     '@typescript-eslint/no-empty-interface': 'error',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-misused-new': 'error',
     '@typescript-eslint/no-namespace': 'error',
     '@typescript-eslint/no-parameter-properties': 'off',
