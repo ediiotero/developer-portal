@@ -58,8 +58,8 @@ describe('application', () => {
       ['firstName', constants.UPDATE_APPLICATION_FIRST_NAME],
       ['lastName', constants.UPDATE_APPLICATION_LAST_NAME],
       ['email', constants.UPDATE_APPLICATION_EMAIL],
-      ['oAuthApplicationType', constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE],
-      ['oAuthRedirectURI', constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI],
+      ['oAuthApplicationType', constants.UPDATE_APPLY_OAUTH_APP_TYPE],
+      ['oAuthRedirectURI', constants.UPDATE_APPLY_OAUTH_REDIRECT_URI],
       ['organization', constants.UPDATE_APPLICATION_ORGANIZATION],
     ];
 
@@ -69,9 +69,7 @@ describe('application', () => {
         value: 'test',
       };
 
-      const inputs = application(app, { newValue, type: actionName } as UpdateApplicationAction)
-        .inputs;
-
+      const { inputs } = application(app, { newValue, type: actionName } as UpdateApplicationAction);
       const expectedSubObject = { [fieldName]: newValue };
       expect(inputs).toEqual(expect.objectContaining(expectedSubObject));
     });
