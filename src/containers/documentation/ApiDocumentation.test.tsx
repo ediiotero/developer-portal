@@ -50,7 +50,7 @@ describe('ApiDocumentation', () => {
     render(
       <Provider store={store}>
         <FlagsProvider flags={defaultFlags}>
-          <ApiDocumentation apiDefinition={api} categoryKey="fake" location={history.location} />
+          <ApiDocumentation apiDefinition={api} location={history.location} />
         </FlagsProvider>
       </Provider>,
     );
