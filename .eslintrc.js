@@ -75,7 +75,7 @@ const coreESLintRules = {
   'no-array-constructor': 'error',
   'no-bitwise': 'error',
   'no-caller': 'error',
-  'no-console': 'error',
+  'no-console': 'off',
   'no-constructor-return': 'error',
   'no-div-regex': 'error',
   'no-empty-function': 'error',
@@ -173,7 +173,6 @@ module.exports = {
     'eslint-plugin-import',
     'eslint-plugin-react',
     '@typescript-eslint',
-    '@typescript-eslint/tslint',
     /**
      * NEVER disable JSX accessibility rules globally. If you need to disable them locally, either 
      * because the code in question has been confirmed to be an exception to the rule or because the
@@ -299,32 +298,6 @@ module.exports = {
     // if it's overused https://kentcdodds.com/blog/usememo-and-usecallback
     'react/jsx-no-bind': 'off',
     'react/jsx-wrap-multilines': 'off',
-    '@typescript-eslint/tslint/config': [
-      'error',
-      {
-        lintFile: './tslint.json',
-        rules: {
-          'jsx-no-string-ref': true,
-          'jsx-self-close': true,
-          'object-literal-sort-keys': true,
-          'react-a11y-anchors': true,
-          'react-a11y-aria-unsupported-elements': true,
-          'react-a11y-event-has-role': true,
-          'react-a11y-image-button-has-alt': true,
-          'react-a11y-img-has-alt': true,
-          'react-a11y-lang': true,
-          'react-a11y-meta': true,
-          'react-a11y-no-onchange': true,
-          'react-a11y-props': true,
-          'react-a11y-proptypes': true,
-          'react-a11y-required': true,
-          'react-a11y-role': true,
-          'react-a11y-role-supports-aria-props': true,
-          'react-a11y-tabindex-no-positive': true,
-          'react-a11y-titles': true,
-        },
-      },
-    ],
   },
   settings: {
     react: {

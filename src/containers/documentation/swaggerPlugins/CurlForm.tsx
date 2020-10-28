@@ -319,7 +319,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
       <div>
         <h3>Environment:</h3>
         {/* eslint-disable-next-line jsx-a11y/no-onchange */}
-        <select // tslint:disable-next-line:react-a11y-no-onchange
+        <select
           value={this.state.env}
           onChange={e => {
             this.setState({ env: e.target.value });

@@ -1,7 +1,5 @@
 /* eslint-disable max-lines, multiline-comment-style
   -- module is deprecated and I don't care to refactor */
-// tslint:disable:react-a11y-required
-// tslint:disable:react-a11y-proptypes
 import * as React from 'react';
 
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
