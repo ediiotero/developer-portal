@@ -13,9 +13,9 @@ Happy linting! 💖
 */
 
 const coreESLintRules = {
-  'arrow-body-style': 'error',
   'array-bracket-spacing': 'error',
   'array-element-newline': ['error', 'consistent'],
+  'arrow-body-style': 'error',
   'arrow-parens': ['error', 'as-needed'],
   'arrow-spacing': 'error',
   'block-spacing': 'error',
@@ -103,7 +103,10 @@ const coreESLintRules = {
 /**
  * A lot of import rules are already covered by the Typescript compiler, so we don't use any
  * of the eslint-plugin-import presets. These rules are helpful additions.
+<<<<<<< HEAD
  * https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
+=======
+>>>>>>> origin/API-1323/eslint-refinement-4
  */
 const importRules = {
   'import/first': 'error',
