@@ -24,10 +24,12 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
     const selectCurrentVersion = (versionInfo: VersionMetadata) =>
       versionInfo.status === 'Current Version';
 
-    // if this component is rendered, there should (a) be versions present in metadata and (b) 
-    // be a version with the status "Current Version". as a fallback, though, we set it to the 
-    // empty string as in getVersionNumber() in src/reducers/api-versioning.ts.
-    return versions.find(selectCurrentVersion)?.version || '';
+    /**
+     * if this component is rendered, there should (a) be versions present in metadata and (b)
+     * be a version with the status "Current Version". as a fallback, though, we set it to the
+     * empty string as in getVersionNumber() in src/reducers/api-versioning.ts.
+     */
+    return versions?.find(selectCurrentVersion)?.version || '';
   }
 
   public handleSelectChange(version: string): void {
@@ -38,12 +40,12 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
     this.props.getSystem().versionActions.updateVersion(this.state.version);
   }
 
-  public buildDisplay(metaObject: VersionMetadata): string {
-    const { version, status, internal_only } = metaObject;
-    return `${version} - ${status} ${internal_only ? '(Internal Only)' : ''}`;
-  }
-
   public render(): JSX.Element {
+    const buildDisplay = (meta: VersionMetadata): string => {
+      const { version, status, internal_only } = meta;
+      return `${version} - ${status} ${internal_only ? '(Internal Only)' : ''}`;
+    };
+
     return (
       <div
         className={classNames(
@@ -66,9 +68,9 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
           {this.props
             .getSystem()
             .versionSelectors.versionMetadata()
-            .map((versionInfo: VersionMetadata) =>(
+            ?.map((versionInfo: VersionMetadata) => (
               <option value={versionInfo.version} key={versionInfo.version}>
-                {this.buildDisplay(versionInfo)}
+                {buildDisplay(versionInfo)}
               </option>
             ))}
         </select>

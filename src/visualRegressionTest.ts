@@ -1,21 +1,22 @@
+/* eslint-disable no-loop-func -- we need to break up these Jest tests inside loops */
 import { Page } from 'puppeteer';
-
 import { mockSwagger, puppeteerHost, testPaths } from './e2eHelpers';
 
 jest.setTimeout(100000);
 
 const viewports = [
-  { width: 1200, height: 800 },
-  { width: 768, height: 800 },
-  { width: 375, height: 800 },
+  { height: 800, width: 1200 },
+  { height: 800, width: 768 },
+  { height: 800, width: 375 },
 ];
 
 const checkScreenshots = async (page: Page, selector: string) => {
   for (const viewport of viewports) {
     await page.setViewport(viewport);
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    // eslint-disable-next-line no-promise-executor-return
+    await new Promise(resolve => setTimeout(resolve, 500));
     const content = await page.$(selector);
-    if(content) {
+    if (content) {
       const screenshot = await content.screenshot({});
       expect(screenshot).toMatchImageSnapshot();
     } else {
@@ -29,7 +30,7 @@ const paths = testPaths.filter(path => path !== '/');
 describe('Visual regression test', () => {
   it('renders the homepage properly', async () => {
     // Set unlimited timeout on first request, since it may timeout while webpack is compiling.
-    await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0', timeout: 0 });
+    await page.goto(`${puppeteerHost}`, { timeout: 0, waitUntil: 'networkidle0' });
     await checkScreenshots(page, 'main');
   });
 

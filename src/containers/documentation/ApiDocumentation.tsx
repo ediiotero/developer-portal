@@ -7,7 +7,7 @@ import * as actions from '../../actions';
 import { APIDescription, ApiDescriptionPropType, APIDocSource } from '../../apiDefs/schema';
 import { Flag } from '../../flags';
 import { history } from '../../store';
-import SwaggerDocs from './SwaggerDocs';
+import { SwaggerDocs } from './SwaggerDocs';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
@@ -42,7 +42,6 @@ const getInitialTabIndex = (searchQuery: string, docSources: APIDocSource[]): nu
 };
 
 const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
-
   const { apiDefinition, location } = props;
 
   /*
@@ -73,9 +72,9 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   const apiVersion = queryParams.get('version');
 
   React.useEffect((): void => {
-    dispatch(actions.setRequstedApiVersion(apiVersion));
+    dispatch(actions.setRequestedApiVersion(apiVersion));
   }, [dispatch, apiVersion, location.pathname]);
-  
+
   /*
    * RENDER
    */
