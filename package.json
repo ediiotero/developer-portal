@@ -151,7 +151,7 @@
     "postcss-preset-env": "6.0.6",
     "postcss-safe-parser": "4.0.1",
     "prettier": "^1.16.4",
-    "pretty-format": "^26.4.2",
+    "pretty-format": "^26.6.1",
     "puppeteer": "^2.1.1",
     "react-dev-utils": "^6.1.1",
     "react-test-renderer": "^16.14.0",
