@@ -47,7 +47,7 @@ const renderError = (props: DevApplication) => {
 };
 
 const selectedApis = (props: DevApplication) => {
-  const apis = props.inputs.apis;
+  const { apis } = props.inputs;
   return Object.keys(apis).filter(apiName => apis[apiName]);
 };
 
@@ -73,7 +73,6 @@ const allBioFieldsComplete = (props: DevApplication) => {
 };
 
 const readyToSubmit = (props: DevApplication) => {
-
   const {
     inputs: { oAuthApplicationType, oAuthRedirectURI, termsOfService },
   } = props;
